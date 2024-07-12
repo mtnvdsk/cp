@@ -19,24 +19,27 @@ signed main(){
     int t=1;
     cin>>t;
     while(t--){
-        int n, m, k;
+        ll n, m, k;
         cin >> n >> m >> k;
+        k--;
         vector<int> a(n), b(m);
         int sum = 0;
-        rep(i, 0, n) {
-            cin >> a[i];
-            sum += a[i];
-        }
+        rep(i, 0, n) cin >> a[i];
         rep(i, 0, m) cin >> b[i];
 
-        if (k % 2 == 0) {
-            cout << sum << endl;
-        } else {
-            int min_a = *min_element(a.begin(), a.end());
-            int max_b = *max_element(b.begin(), b.end());
-            if(min_a>max_b) cout<<sum<<endl;
-            else cout << (sum - min_a + max_b) << endl;
+        int x=0,y=0;
+        rep(i,1,n) if(a[i]<a[x]) x=i;
+        rep(i,1,m) if(b[i]>b[y]) y=i;
+        if(a[x]<b[y]) swap(a[x],b[y]);
+        if(k&1){
+            x=0,y=0;
+            rep(i,1,n) if(a[i]>a[x]) x=i;
+            rep(i,1,m) if(b[i]<b[y]) y=i;
+            swap(a[x],b[y]);
         }
+        ll ans=0;
+        rep(i,0,n) ans+=a[i];
+        cout<<ans<<endl;
     }
     return 0;
 }
