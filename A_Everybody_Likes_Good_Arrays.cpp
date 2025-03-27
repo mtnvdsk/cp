@@ -13,26 +13,22 @@ typedef long long int lli;
 typedef long long ll;
 const int N = 1e3+5;
 
-int dx[4] = {-1, 1, -1, 1}, dy[4] = {-1, -1, 1, 1};
 signed main(){
     ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     int t=1;
     cin>>t;
     while(t--){
-        int a,b,x1,x2,y1,y2;
-        cin>>a>>b>>x1>>y1>>x2>>y2;
-        set<pair<int,int>> s1,s2;
-        rep(i,0,4){
-            s1.insert({x1+dx[i]*a,y1+dy[i]*b});
-            s1.insert({x1+dx[i]*b,y1+dy[i]*a});
-            s2.insert({x2+dx[i]*a,y2+dy[i]*b});
-            s2.insert({x2+dx[i]*b,y2+dy[i]*a});
+        int n;
+        cin>>n;
+        int a[n];
+        rep(i,0,n){
+            cin>>a[i];
         }
         int ans=0;
-        for(auto i:s1){
-            if(s2.find(i)!=s2.end()) ans++;
+        for(int i=0;i+1<n;i++) {
+            ans+=(!((a[i]^a[i+1])&1));
         }
-        cout<<ans<<endl;
+        cout<<ans<<"\n";
     }
     return 0;
 }
