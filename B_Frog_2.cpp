@@ -11,35 +11,45 @@ typedef long long int lli;
 #define all(vec) vec.begin(), vec.end()
 #define endl '\n'
 typedef long long ll;
-const int N = 1e5 + 5;  // Updated for larger constraints
-const int INF = 1e9 + 7;
+const int N = 1e3 + 5;
 
-int h[N];
-int dp[N];
+vector<int> h;
+vector<int> dp;
+int n;
 
-int rec(int i, int k, int n) {
-    if (i == n - 1) return 0;  // Base case: reached the last stone
-    if (dp[i] != -1) return dp[i];  // Memoization
+int rec(int l, int k) {
+    // Pruning
+    if (l >= n - 1) return 0;
+    // Cache check
+    if (dp[l] != -1) return dp[l];
 
-    int ans = INF;
-    rep(j, 1, k + 1) {
-        if (i + j < n) {
-            ans = min(ans, abs(h[i] - h[i + j]) + rec(i + j, k, n));
+    // Compute
+    int ans = INT_MAX;
+    rep(i, 1, k + 1) {
+        if (l + i < n) {  // Ensure we don't exceed bounds
+            ans = min(ans, abs(h[l] - h[l + i]) + rec(l + i, k));
         }
     }
-    return dp[i] = ans;
+    // Save and return
+    return dp[l] = ans;
 }
 
 signed main() {
-    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    
     int t = 1;
-    //cin >> t;
+    // cin >> t;
     while (t--) {
-        int n, k;
+        int k;
         cin >> n >> k;
-        memset(dp, -1, sizeof(dp));
-        rep(i, 0, n) cin >> h[i];
-        cout << rec(0, k, n) << endl;
+        h.assign(n, 0);
+        rep(i, 0, n) {
+            cin >> h[i];
+        }
+        dp.assign(n, -1);
+        cout << rec(0, k) << endl;
     }
     return 0;
 }
